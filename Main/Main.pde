@@ -18,7 +18,6 @@ float xstartpoint;
 float imageWidth = 157;
 float imageHeight = 167;
 
-
 float sliderboxX = 1039;
 float sliderboxY = 373;
 float sliderboxWidth = 471;
@@ -59,6 +58,8 @@ void draw() {
       xendpoint = x + 167 * i;
       xstartpoint = x;
     }
+    
+   
   }
 }
 
@@ -67,6 +68,8 @@ void mouseClicked() {
     state = state_menu;
   }
 }
+
+
 
 void mouseDragged() {
   if (isMouseOverSlider()) {
