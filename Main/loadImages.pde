@@ -4,7 +4,7 @@ class loadImages {
   void load(){
     
     // load [x] amount of photos for slider
-    p = new Photo[9];
+    p = new Photo[6];
     for(int i = 0; i < p.length; i++){
       p[i] = new Photo(i + ".PNG");
     }
