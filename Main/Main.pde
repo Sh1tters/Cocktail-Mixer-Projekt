@@ -43,6 +43,8 @@ void draw() {
 
   if (state == state_menu) {
     background(255);
+    // rectangle around the 3 images
+    strokeWeight(4); // default weight
     rect(sliderboxX, sliderboxY, sliderboxWidth, sliderboxHeight);
 
     if (mousePressed && isMouseOverSlider()) {
@@ -50,7 +52,9 @@ void draw() {
     } else {
       tint(255);
     }
-
+    
+    strokeWeight(8); // thicker
+    rect(1206, y, sliderboxWidth / 3, sliderboxHeight);
     for (int i = 0; i < p.length; i++) {
       image(img.get(i), x + 167 * i, y, imageWidth, imageHeight);
 
