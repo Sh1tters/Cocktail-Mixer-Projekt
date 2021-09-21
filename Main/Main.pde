@@ -10,6 +10,7 @@ public int id = 0;
 
 PImage idleImg;
 ArrayList<PImage> img = new ArrayList();
+ArrayList<String> imgholder = new ArrayList();
 loadImages loadimages = new loadImages();
 float x,y;
 
@@ -53,7 +54,7 @@ void draw() {
     for (int i = 0; i < p.length; i++) {
       image(img.get(i), x + 167 * i, y, imageWidth, imageHeight); 
       
-      println("ID: " + i + ", image Name: " + img.get(i));
+      println(imgholder);
     }
     
   }
