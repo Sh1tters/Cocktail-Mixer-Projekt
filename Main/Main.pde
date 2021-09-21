@@ -7,15 +7,16 @@ private int state_menu = 2;
 // have to change state from different class
 public int state = state_idle;
 
-public int id = 0;
+public int id = 0; 
 
 PImage idleImg;
-PImage img;
+ArrayList<PImage> img = new ArrayList();
 loadImages loadimages = new loadImages();
 float x,y;
 
 float imageWidth = 157;
 float imageHeight = 167;
+
 
 float sliderboxX = 1039;
 float sliderboxY = 373;
@@ -42,7 +43,6 @@ void draw() {
 
   if (state == state_menu) {
     background(255);
-
     rect(sliderboxX, sliderboxY, sliderboxWidth, sliderboxHeight);
     
     if(mousePressed && isMouseOverSlider()){
@@ -52,7 +52,8 @@ void draw() {
     }
     
     for (int i = 0; i < p.length; i++) {
-      image(img, x + 167 * i, y, imageWidth, imageHeight); 
+      
+      image(img.get(i), x + 167 * i, y, imageWidth, imageHeight); 
       
       //println("ID: " + i + ", image Name: " + img.getNative());
     }
