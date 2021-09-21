@@ -51,10 +51,6 @@ void draw() {
     
     for (int i = 0; i < p.length; i++) {
       image(img, x + 167 * i, y, imageWidth, imageHeight); 
-      color aColor;
-      aColor = color(random(255), random(255), random(255));
-      fill(aColor);
-      ellipse(x + 167 * i,y,20,20);
       
       println("ID: " + i + ", image Name: " + img.getNative());
     }
