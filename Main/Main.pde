@@ -6,11 +6,11 @@ private int state_menu = 2;
 // we want this to be changed if we maybe
 // have to change state from different class
 public int state = state_idle;
-
 public int id = 0; 
 
 PImage idleImg;
 ArrayList<PImage> img = new ArrayList();
+ArrayList<String> imgholder = new ArrayList();
 loadImages loadimages = new loadImages();
 float x,y;
 
@@ -52,10 +52,9 @@ void draw() {
     }
     
     for (int i = 0; i < p.length; i++) {
-      
       image(img.get(i), x + 167 * i, y, imageWidth, imageHeight); 
       
-      //println("ID: " + i + ", image Name: " + img.getNative());
+      println(imgholder);
     }
     
   }
@@ -73,6 +72,7 @@ void mouseDragged(){
     x += mouseX - pmouseX; // pmouseX = previous mouse position from last frame
   }
 }
+
 
 boolean isMouseOverSlider() {
   return isPointInsideRectangle(mouseX, mouseY, sliderboxX, sliderboxY, sliderboxWidth, sliderboxHeight);
