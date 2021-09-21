@@ -13,9 +13,7 @@ PImage idleImg;
 PImage img;
 loadImages loadimages = new loadImages();
 float x,y;
-float distance;
-float mousey = 0;
-boolean isSliderPressed = false;
+
 float imageWidth = 157;
 float imageHeight = 167;
 
@@ -46,9 +44,6 @@ void draw() {
     background(255);
 
     rect(sliderboxX, sliderboxY, sliderboxWidth, sliderboxHeight);
-     if(isSliderPressed) {
-      x = mouseX - distance;
-    }
     
     if(mousePressed && isMouseOverSlider()){
       tint(135);
