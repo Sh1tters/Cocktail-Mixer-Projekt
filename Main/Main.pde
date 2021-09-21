@@ -71,9 +71,9 @@ void mouseClicked() {
 void mouseDragged() {
   if (isMouseOverSlider()) {
     if (xendpoint <= 1301) { // has slider reached endpoint left?
-      x = x + 10;
+      x = x + 1;
     } else if (xstartpoint >= sliderboxX + 50) { // has slider reached endpoint right?
-      x = x - 10;
+      x = x - 1;
     } else {
       x += mouseX - pmouseX; // pmouseX = previous mouse position from last frame
     }
