@@ -19,6 +19,11 @@ boolean isSliderPressed = false;
 float imageWidth = 157;
 float imageHeight = 167;
 
+float sliderboxX = 1039;
+float sliderboxY = 373;
+float sliderboxWidth = 471;
+float sliderboxHeight = 167;
+
 void settings() {
   // display monitor 1 on hardware setup
   fullScreen(P3D);
@@ -27,8 +32,8 @@ void settings() {
 void setup() {
   // 60 frames per second (default)
   frameRate(60);
-  x = 500;
-  y = 100;
+  x = 1039;
+  y = 373;
   loadimages.load();
 }
 
@@ -39,6 +44,8 @@ void draw() {
 
   if (state == state_menu) {
     background(255);
+
+    rect(sliderboxX, sliderboxY, sliderboxWidth, sliderboxHeight);
      if(isSliderPressed) {
       x = mouseX - distance;
     }
@@ -52,9 +59,8 @@ void draw() {
     for (int i = 0; i < p.length; i++) {
       image(img, x + 167 * i, y, imageWidth, imageHeight); 
       
-      println("ID: " + i + ", image Name: " + img.getNative());
+      //println("ID: " + i + ", image Name: " + img.getNative());
     }
-    
     
   }
 }
@@ -73,7 +79,7 @@ void mouseDragged(){
 }
 
 boolean isMouseOverSlider() {
-  return isPointInsideRectangle(mouseX, mouseY, x, y, imageWidth, imageHeight);
+  return isPointInsideRectangle(mouseX, mouseY, sliderboxX, sliderboxY, sliderboxWidth, sliderboxHeight);
 }
 
 // http://www.jeffreythompson.org/collision-detection/point-rect.php
