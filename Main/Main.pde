@@ -67,7 +67,6 @@ void mouseClicked(){
 }
 
 void mouseDragged(){
-  // have a rect that covers 3 pictures for the slider instead of only working on one specific image
   if (isMouseOverSlider()) { 
     x += mouseX - pmouseX; // pmouseX = previous mouse position from last frame
   }
