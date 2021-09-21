@@ -63,6 +63,28 @@ void draw() {
       xstartpoint = x;
     }
     
+    /*
+    
+    ellipse(x,y,10,10); // 1. image corner
+    ellipse(x + 167 * 1, y, 10, 10); // 2. image corner
+    ellipse(x + 167 * 2, y, 10, 10); // 3. image corner
+    ellipse(x + 167 * 3, y, 10, 10); // 4. image corner
+    ellipse(x + 167 * 4, y, 10, 10); // 5. image corner
+    ellipse(x + 167 * 5, y, 10, 10); // 6. image corner
+    
+    
+    Solution 1:
+    Calculate each distance from every images top left corner and print which corner is closest to the rects top right corner
+    
+    Solution 2:
+    Monitor each image, and print out if a image hits the top bar of the mid rect
+    
+    Solution 3: 
+    
+    
+    
+    */
+    
    
   }
 }
