@@ -51,10 +51,9 @@ void draw() {
     }
     
     for (int i = 0; i < p.length; i++) {
-      
       image(img.get(i), x + 167 * i, y, imageWidth, imageHeight); 
       
-      //println("ID: " + i + ", image Name: " + img.getNative());
+      println("ID: " + i + ", image Name: " + img.get(i));
     }
     
   }
