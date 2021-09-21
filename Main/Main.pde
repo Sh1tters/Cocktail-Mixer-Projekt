@@ -6,7 +6,6 @@ private int state_menu = 2;
 // we want this to be changed if we maybe
 // have to change state from different class
 public int state = state_idle;
-
 public int id = 0; 
 
 PImage idleImg;
@@ -73,6 +72,7 @@ void mouseDragged(){
     x += mouseX - pmouseX; // pmouseX = previous mouse position from last frame
   }
 }
+
 
 boolean isMouseOverSlider() {
   return isPointInsideRectangle(mouseX, mouseY, sliderboxX, sliderboxY, sliderboxWidth, sliderboxHeight);
