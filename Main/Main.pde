@@ -6,14 +6,15 @@ private int state_menu = 2;
 // we want this to be changed if we maybe
 // have to change state from different class
 public int state = state_idle;
-public int id = 0; 
+public int id = 0;
 
 PImage idleImg;
 ArrayList<PImage> img = new ArrayList();
 ArrayList<String> imgholder = new ArrayList();
 loadImages loadimages = new loadImages();
-float x,y;
-
+float x, y;
+float xendpoint;
+float xstartpoint;
 float imageWidth = 157;
 float imageHeight = 167;
 
@@ -38,38 +39,44 @@ void setup() {
 
 void draw() {
   if (state == state_idle) {
-   background(idleImg);
+    background(idleImg);
   }
 
   if (state == state_menu) {
     background(255);
     rect(sliderboxX, sliderboxY, sliderboxWidth, sliderboxHeight);
-    
-    if(mousePressed && isMouseOverSlider()){
+
+    if (mousePressed && isMouseOverSlider()) {
       tint(135);
     } else {
-      tint(255); 
+      tint(255);
     }
-    
+
     for (int i = 0; i < p.length; i++) {
-      image(img.get(i), x + 167 * i, y, imageWidth, imageHeight); 
-      
-      println(imgholder);
+      image(img.get(i), x + 167 * i, y, imageWidth, imageHeight);
+
+      //println(imgholder);
+      xendpoint = x + 167 * i;
+      xstartpoint = x;
     }
-    
   }
 }
 
-void mouseClicked(){
- if(state == state_idle){
-   state = state_menu;
- }
+void mouseClicked() {
+  if (state == state_idle) {
+    state = state_menu;
+  }
 }
 
-void mouseDragged(){
-  // have a rect that covers 3 pictures for the slider instead of only working on one specific image
-  if (isMouseOverSlider()) { 
-    x += mouseX - pmouseX; // pmouseX = previous mouse position from last frame
+void mouseDragged() {
+  if (isMouseOverSlider()) {
+    if (xendpoint <= 1301) { // has slider reached endpoint left?
+      x = x + 1;
+    } else if (xstartpoint >= sliderboxX + 50) { // has slider reached endpoint right?
+      x = x - 1;
+    } else {
+      x += mouseX - pmouseX; // pmouseX = previous mouse position from last frame
+    }
   }
 }
 
