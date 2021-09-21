@@ -17,6 +17,7 @@ float x,y;
 float imageWidth = 157;
 float imageHeight = 167;
 
+
 float sliderboxX = 1039;
 float sliderboxY = 373;
 float sliderboxWidth = 471;
@@ -52,6 +53,7 @@ void draw() {
     }
     
     for (int i = 0; i < p.length; i++) {
+      
       image(img, x + 167 * i, y, imageWidth, imageHeight); 
       
       //println("ID: " + i + ", image Name: " + img.getNative());
