@@ -16,6 +16,7 @@ PImage idleImg;
 ArrayList<PImage> img = new ArrayList();
 ArrayList<String> imgholder = new ArrayList();
 loadImages loadimages = new loadImages();
+Popularity popularity = new Popularity();
 float x, y;
 float xendpoint;
 float xstartpoint;
@@ -38,6 +39,7 @@ void setup() {
   x = 1039;
   y = 373;
   loadimages.load();
+  popularity.readList();
 }
 
 void draw() {
@@ -91,6 +93,10 @@ void mouseDragged() {
     }
   }
 }
+
+
+
+
 
 private void switcher(int i){
   switch(i){
