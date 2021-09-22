@@ -8,6 +8,10 @@ private int state_menu = 2;
 public int state = state_idle;
 public int id = 0;
 
+public String drinkNameMaybeSelected = "N/A";
+public String drinkNameSelected = "N/A";
+public boolean showHældopButton = false;
+
 PImage idleImg;
 ArrayList<PImage> img = new ArrayList();
 ArrayList<String> imgholder = new ArrayList();
@@ -55,14 +59,15 @@ void draw() {
     
     strokeWeight(8); // thicker
     rect(1206, y, sliderboxWidth / 3, sliderboxHeight);
+
     for (int i = 0; i < p.length; i++) {
       image(img.get(i), x + 167 * i, y, imageWidth, imageHeight);
 
+      switcher(i);
       //println(imgholder);
       xendpoint = x + 167 * i;
       xstartpoint = x;
     }
-    
    
   }
 }
@@ -77,13 +82,84 @@ void mouseClicked() {
 
 void mouseDragged() {
   if (isMouseOverSlider()) {
-    if (xendpoint <= 1301) { // has slider reached endpoint left?
+    if (xendpoint <= 1181) { // has slider reached endpoint right?
       x = x + 1;
-    } else if (xstartpoint >= sliderboxX + 50) { // has slider reached endpoint right?
+    } else if (xstartpoint >= sliderboxX + 200) { // has slider reached endpoint left?
       x = x - 1;
     } else {
       x += mouseX - pmouseX; // pmouseX = previous mouse position from last frame
     }
+  }
+}
+
+private void switcher(int i){
+  switch(i){
+    
+    // Pina Colada
+    case 0: {
+      if((x - 167) - (1206) > -190 && (x - 167) - (1206) < -150) {
+       drinkNameMaybeSelected = "Maybe: Pina Colada";
+       showHældopButton = true;
+       println(drinkNameMaybeSelected);
+      } else showHældopButton = false;
+
+      break;
+    }
+    
+    // Gin and tonic
+    case 1: {
+      if(x + 167 * 0 - 1206 > -190 && x + 167 * 0 - 1206 < -150) {
+       drinkNameMaybeSelected = "Maybe: Gin and tonic";
+       showHældopButton = true;
+       println(drinkNameMaybeSelected);
+      } else showHældopButton = false;
+      break;
+    }
+    
+    // Long Island Iced Tea
+    case 2: {
+      if((x + 167 * 1) - (1206) > -190 && (x + 167 * 1) - (1206) < -150) {
+       drinkNameMaybeSelected = "Maybe: Long Island Iced Tea";
+       showHældopButton = true;
+       println(drinkNameMaybeSelected);
+      } else showHældopButton = false;
+      break;
+    }
+    
+    // Mojito
+    case 3: {
+      if((x + 167 * 2) - (1206) > -190 && (x + 167 * 2) - (1206) < -150) {
+       drinkNameMaybeSelected = "Maybe: Mojito";
+       showHældopButton = true;
+       println(drinkNameMaybeSelected);
+      } else showHældopButton = false;
+      break;
+    }
+    
+    // Rom og cola
+    case 4: {
+      if((x + 167 * 3) - (1206) > -190 && (x + 167 * 3) - (1206) < -150) {
+       drinkNameMaybeSelected = "Maybe: Rom og cola";
+       showHældopButton = true;
+       println(drinkNameMaybeSelected);
+      } else showHældopButton = false;
+      break;
+    }
+    
+    // Sex on the beach
+    case 5: {
+      if((x + 167 * 4) - (1206) > -190 && (x + 167 * 4) - (1206) < -150) {
+       drinkNameMaybeSelected = "Maybe: Sex on the beach";
+       showHældopButton = true;
+       println(drinkNameMaybeSelected);
+      } else showHældopButton = false;
+      break;
+    }
+    
+    
+    
+
+    
   }
 }
 
