@@ -1,0 +1,33 @@
+{ "drinks": [
+	{
+		"id": 0,
+		"count": 2,
+		"name": "Pina Colada"
+	},
+	{
+		"id": 1,
+		"count": 23,
+		"name": "Gin og tonic"
+	},
+	{
+		"id": 2,
+		"count": 16,
+		"name": "Long Island Iced Tea"
+	},
+	{
+		"id": 3,
+		"count": 4,
+		"name": "Mojito"
+	},
+	{
+		"id": 4,
+		"count": 54,
+		"name": "Rom og cola"
+	},
+	{
+		"id": 5,
+		"count": 34,
+		"name": "Sex on the beach"
+	}
+]
+}

@@ -14,7 +14,6 @@ public boolean showHældopButton = false;
 
 PImage idleImg;
 ArrayList<PImage> img = new ArrayList();
-ArrayList<String> imgholder = new ArrayList();
 loadImages loadimages = new loadImages();
 Popularity popularity = new Popularity();
 float x, y;
@@ -39,7 +38,7 @@ void setup() {
   x = 1039;
   y = 373;
   loadimages.load();
-  popularity.readList();
+  popularity.loadData();
 }
 
 void draw() {
@@ -112,7 +111,7 @@ private void switcher(int i){
       break;
     }
     
-    // Gin and tonic
+    // Gin og tonic
     case 1: {
       if(x + 167 * 0 - 1206 > -190 && x + 167 * 0 - 1206 < -150) {
        drinkNameMaybeSelected = "Maybe: Gin and tonic";
