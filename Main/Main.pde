@@ -10,11 +10,12 @@ public int id = 0;
 
 public String drinkNameMaybeSelected = "N/A";
 public String drinkNameSelected = "N/A";
-public boolean showHældopButton = false;
+public boolean showHaeldopButton = false;
 
 PImage idleImg;
-ArrayList<PImage> img = new ArrayList();
-loadImages loadimages = new loadImages();
+PImage[] images;
+PGraphics collection;
+
 Popularity popularity = new Popularity();
 float x, y;
 float xendpoint;
@@ -37,8 +38,19 @@ void setup() {
   frameRate(60);
   x = 1039;
   y = 373;
-  loadimages.load();
+
+   // load background image on idle
+  idleImg = loadImage("idleImage.png"); 
+  loadImages();
   popularity.loadData();
+ 
+  collection = createGraphics(6 * 167, 157);
+  for (int i = 0; i < images.length; i++) {
+    collection.beginDraw();
+    collection.image(images[i], 167 * i, 0);
+    collection.endDraw();
+    //image(img.get(i), x + 167 * i, y, imageWidth, imageHeight);
+   }
 }
 
 void draw() {
@@ -60,10 +72,11 @@ void draw() {
     
     strokeWeight(8); // thicker
     rect(1206, y, sliderboxWidth / 3, sliderboxHeight);
-
-    for (int i = 0; i < p.length; i++) {
-      image(img.get(i), x + 167 * i, y, imageWidth, imageHeight);
-
+    
+    // display slider images
+   image(collection, x,y);   
+   
+    for (int i = 0; i < images.length; i++) {
       switcher(i);
       //println(imgholder);
       xendpoint = x + 167 * i;
@@ -104,9 +117,9 @@ private void switcher(int i){
     case 0: {
       if((x - 167) - (1206) > -190 && (x - 167) - (1206) < -150) {
        drinkNameMaybeSelected = "Maybe: Pina Colada";
-       showHældopButton = true;
+       showHaeldopButton = true;
        println(drinkNameMaybeSelected);
-      } else showHældopButton = false;
+      } else showHaeldopButton = false;
 
       break;
     }
@@ -115,9 +128,9 @@ private void switcher(int i){
     case 1: {
       if(x + 167 * 0 - 1206 > -190 && x + 167 * 0 - 1206 < -150) {
        drinkNameMaybeSelected = "Maybe: Gin and tonic";
-       showHældopButton = true;
+       showHaeldopButton = true;
        println(drinkNameMaybeSelected);
-      } else showHældopButton = false;
+      } else showHaeldopButton = false;
       break;
     }
     
@@ -125,9 +138,9 @@ private void switcher(int i){
     case 2: {
       if((x + 167 * 1) - (1206) > -190 && (x + 167 * 1) - (1206) < -150) {
        drinkNameMaybeSelected = "Maybe: Long Island Iced Tea";
-       showHældopButton = true;
+       showHaeldopButton = true;
        println(drinkNameMaybeSelected);
-      } else showHældopButton = false;
+      } else showHaeldopButton = false;
       break;
     }
     
@@ -135,9 +148,9 @@ private void switcher(int i){
     case 3: {
       if((x + 167 * 2) - (1206) > -190 && (x + 167 * 2) - (1206) < -150) {
        drinkNameMaybeSelected = "Maybe: Mojito";
-       showHældopButton = true;
+       showHaeldopButton = true;
        println(drinkNameMaybeSelected);
-      } else showHældopButton = false;
+      } else showHaeldopButton = false;
       break;
     }
     
@@ -145,9 +158,9 @@ private void switcher(int i){
     case 4: {
       if((x + 167 * 3) - (1206) > -190 && (x + 167 * 3) - (1206) < -150) {
        drinkNameMaybeSelected = "Maybe: Rom og cola";
-       showHældopButton = true;
+       showHaeldopButton = true;
        println(drinkNameMaybeSelected);
-      } else showHældopButton = false;
+      } else showHaeldopButton = false;
       break;
     }
     
@@ -155,9 +168,9 @@ private void switcher(int i){
     case 5: {
       if((x + 167 * 4) - (1206) > -190 && (x + 167 * 4) - (1206) < -150) {
        drinkNameMaybeSelected = "Maybe: Sex on the beach";
-       showHældopButton = true;
+       showHaeldopButton = true;
        println(drinkNameMaybeSelected);
-      } else showHældopButton = false;
+      } else showHaeldopButton = false;
       break;
     }
     
@@ -180,4 +193,15 @@ boolean isPointInsideRectangle(float px, float py, float rx, float ry, float rw,
     py >= ry &&        // below the top AND
     py <= ry + rh      // above the bottom
     ;
+}
+
+PImage[] loadImages() {
+ // load [x] amount of photos for slider
+        images = new PImage[6];
+        for(int i = 0; i < images.length; i++){
+            images[i] = loadImage(i + ".PNG");
+            images[i].resize(167, 157);
+        }
+        return images;
+    
 }
