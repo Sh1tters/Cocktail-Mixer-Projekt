@@ -6,7 +6,6 @@ private int state_menu = 2;
 // we want this to be changed if we maybe
 // have to change state from different class
 public int state = state_idle;
-public int id = 0;
 
 public String drinkNameMaybeSelected = "N/A";
 public String drinkNameSelected = "N/A";
@@ -47,9 +46,32 @@ void setup() {
   collection = createGraphics(6 * 167, 157);
   for (int i = 0; i < images.length; i++) {
     collection.beginDraw();
-    collection.image(images[i], 167 * i, 0);
-    collection.endDraw();
-    //image(img.get(i), x + 167 * i, y, imageWidth, imageHeight);
+      collection.image(images[i], 167 * i, 0);
+    // get the greatest drinks ID
+    if(finalGreatestID.get(0) == i){ // is drink popular?
+     println("1st"); 
+     collection.textAlign(CENTER);
+     collection.textSize(23);
+     collection.fill(#7B7C68);
+     collection.text("Populær", 187 * i, 20);
+    } else if(finalGreatestID.get(1) == i){ // is drink popular?
+     println("2nd"); 
+     collection.textAlign(CENTER);
+     collection.textSize(23);
+     collection.fill(#7B7C68);
+     collection.text("Populær", 187 * i, 20);
+    } else if(finalGreatestID.get(2) == i){ // is drink popular?
+     println("3rd");
+     collection.textAlign(CENTER);
+     collection.textSize(23);
+     collection.fill(#7B7C68);
+     collection.text("Populær", 187 * i, 20);
+    } else {
+      collection.endDraw();
+      
+    } 
+    
+
    }
 }
 
@@ -64,11 +86,13 @@ void draw() {
     strokeWeight(4); // default weight
     rect(sliderboxX, sliderboxY, sliderboxWidth, sliderboxHeight);
 
+    /*
     if (mousePressed && isMouseOverSlider()) {
       tint(135);
     } else {
       tint(255);
     }
+    */
     
     strokeWeight(8); // thicker
     rect(1206, y, sliderboxWidth / 3, sliderboxHeight);
