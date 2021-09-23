@@ -6,16 +6,16 @@ private int state_menu = 2;
 // we want this to be changed if we maybe
 // have to change state from different class
 public int state = state_idle;
-public int id = 0;
 
 public String drinkNameMaybeSelected = "N/A";
 public String drinkNameSelected = "N/A";
-public boolean showHældopButton = false;
+public boolean showHaeldopButton = false;
 
 PImage idleImg;
-ArrayList<PImage> img = new ArrayList();
-ArrayList<String> imgholder = new ArrayList();
-loadImages loadimages = new loadImages();
+PImage[] images;
+PGraphics collection;
+
+Popularity popularity = new Popularity();
 float x, y;
 float xendpoint;
 float xstartpoint;
@@ -37,7 +37,42 @@ void setup() {
   frameRate(60);
   x = 1039;
   y = 373;
-  loadimages.load();
+
+   // load background image on idle
+  idleImg = loadImage("idleImage.png"); 
+  loadImages();
+  popularity.loadData();
+ 
+  collection = createGraphics(6 * 167, 157);
+  for (int i = 0; i < images.length; i++) {
+    collection.beginDraw();
+      collection.image(images[i], 167 * i, 0);
+    // get the greatest drinks ID
+    if(finalGreatestID.get(0) == i){ // is drink popular?
+     println("1st"); 
+     collection.textAlign(CENTER);
+     collection.textSize(23);
+     collection.fill(#7B7C68);
+     collection.text("Populær", 187 * i, 20);
+    } else if(finalGreatestID.get(1) == i){ // is drink popular?
+     println("2nd"); 
+     collection.textAlign(CENTER);
+     collection.textSize(23);
+     collection.fill(#7B7C68);
+     collection.text("Populær", 187 * i, 20);
+    } else if(finalGreatestID.get(2) == i){ // is drink popular?
+     println("3rd");
+     collection.textAlign(CENTER);
+     collection.textSize(23);
+     collection.fill(#7B7C68);
+     collection.text("Populær", 187 * i, 20);
+    } else {
+      collection.endDraw();
+      
+    } 
+    
+
+   }
 }
 
 void draw() {
@@ -51,18 +86,21 @@ void draw() {
     strokeWeight(4); // default weight
     rect(sliderboxX, sliderboxY, sliderboxWidth, sliderboxHeight);
 
+    /*
     if (mousePressed && isMouseOverSlider()) {
       tint(135);
     } else {
       tint(255);
     }
+    */
     
     strokeWeight(8); // thicker
     rect(1206, y, sliderboxWidth / 3, sliderboxHeight);
-
-    for (int i = 0; i < p.length; i++) {
-      image(img.get(i), x + 167 * i, y, imageWidth, imageHeight);
-
+    
+    // display slider images
+   image(collection, x,y);   
+   
+    for (int i = 0; i < images.length; i++) {
       switcher(i);
       //println(imgholder);
       xendpoint = x + 167 * i;
@@ -92,6 +130,10 @@ void mouseDragged() {
   }
 }
 
+
+
+
+
 private void switcher(int i){
   switch(i){
     
@@ -99,20 +141,20 @@ private void switcher(int i){
     case 0: {
       if((x - 167) - (1206) > -190 && (x - 167) - (1206) < -150) {
        drinkNameMaybeSelected = "Maybe: Pina Colada";
-       showHældopButton = true;
+       showHaeldopButton = true;
        println(drinkNameMaybeSelected);
-      } else showHældopButton = false;
+      } else showHaeldopButton = false;
 
       break;
     }
     
-    // Gin and tonic
+    // Gin og tonic
     case 1: {
       if(x + 167 * 0 - 1206 > -190 && x + 167 * 0 - 1206 < -150) {
        drinkNameMaybeSelected = "Maybe: Gin and tonic";
-       showHældopButton = true;
+       showHaeldopButton = true;
        println(drinkNameMaybeSelected);
-      } else showHældopButton = false;
+      } else showHaeldopButton = false;
       break;
     }
     
@@ -120,9 +162,9 @@ private void switcher(int i){
     case 2: {
       if((x + 167 * 1) - (1206) > -190 && (x + 167 * 1) - (1206) < -150) {
        drinkNameMaybeSelected = "Maybe: Long Island Iced Tea";
-       showHældopButton = true;
+       showHaeldopButton = true;
        println(drinkNameMaybeSelected);
-      } else showHældopButton = false;
+      } else showHaeldopButton = false;
       break;
     }
     
@@ -130,9 +172,9 @@ private void switcher(int i){
     case 3: {
       if((x + 167 * 2) - (1206) > -190 && (x + 167 * 2) - (1206) < -150) {
        drinkNameMaybeSelected = "Maybe: Mojito";
-       showHældopButton = true;
+       showHaeldopButton = true;
        println(drinkNameMaybeSelected);
-      } else showHældopButton = false;
+      } else showHaeldopButton = false;
       break;
     }
     
@@ -140,9 +182,9 @@ private void switcher(int i){
     case 4: {
       if((x + 167 * 3) - (1206) > -190 && (x + 167 * 3) - (1206) < -150) {
        drinkNameMaybeSelected = "Maybe: Rom og cola";
-       showHældopButton = true;
+       showHaeldopButton = true;
        println(drinkNameMaybeSelected);
-      } else showHældopButton = false;
+      } else showHaeldopButton = false;
       break;
     }
     
@@ -150,9 +192,9 @@ private void switcher(int i){
     case 5: {
       if((x + 167 * 4) - (1206) > -190 && (x + 167 * 4) - (1206) < -150) {
        drinkNameMaybeSelected = "Maybe: Sex on the beach";
-       showHældopButton = true;
+       showHaeldopButton = true;
        println(drinkNameMaybeSelected);
-      } else showHældopButton = false;
+      } else showHaeldopButton = false;
       break;
     }
     
@@ -175,4 +217,15 @@ boolean isPointInsideRectangle(float px, float py, float rx, float ry, float rw,
     py >= ry &&        // below the top AND
     py <= ry + rh      // above the bottom
     ;
+}
+
+PImage[] loadImages() {
+ // load [x] amount of photos for slider
+        images = new PImage[6];
+        for(int i = 0; i < images.length; i++){
+            images[i] = loadImage(i + ".PNG");
+            images[i].resize(167, 157);
+        }
+        return images;
+    
 }
