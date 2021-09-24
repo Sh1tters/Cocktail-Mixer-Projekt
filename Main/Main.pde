@@ -11,9 +11,7 @@ public String drinkNameMaybeSelected = "N/A";
 public String drinkNameSelected = "N/A";
 public boolean showHaeldopButton = false;
 
-PImage idleImg;
-PImage starIcon;
-PImage menuImg;
+PImage idleImg, starIcon, menuImg, vaelgdrikImg, haeldopImg, annullerImg, lineUnderDrinks, DrinksText, IndholdText, lineUnderIndhold;
 PImage[] images;
 PGraphics collection;
 
@@ -43,9 +41,18 @@ void setup() {
   frameRate(60);
   x = 1039;
   y = 373;
-  
+  IndholdText = loadImage("Indhold.png");
+  lineUnderIndhold = loadImage("Line 10.png");
+  lineUnderDrinks = loadImage("Line 1.png");
+  DrinksText = loadImage("Drinks.png");
+  vaelgdrikImg = loadImage("Group 3.png");
+  haeldopImg = loadImage("Group 4.png");
+  annullerImg = loadImage("Group 5.png");
   starIcon = loadImage("stjerne.png");
   starIcon.resize(40, 40);
+  
+  IndholdText.resize(200, 100);
+  lineUnderIndhold.resize(400, 0);
   
   menuImg = loadImage("menuImg.png");
   menuImg.resize(2050, 1160);
@@ -102,6 +109,10 @@ void draw() {
    image(collection, x,y);   
    
    image(menuImg, -60, -45);
+   image(DrinksText, 812, 212);
+   image(lineUnderDrinks, 812, 342);
+   image(IndholdText, 297, 429);
+   image(lineUnderIndhold, 296, 559);
    textSize(30);
    fill(#EA1515);
    text(drinkNameMaybeSelected, 100, 100);
@@ -113,20 +124,47 @@ void draw() {
       xendpoint = x + 167 * i;
       xstartpoint = x;
     }
+    
+    if(showHaeldopButton){
+      image(haeldopImg, 1126, 653);
+      image(annullerImg, 1126,756);
+    } else {
+      image(vaelgdrikImg, 1126, 653);
+    }
    
   }
+  
 }
 
 void mouseClicked() {
   if (state == state_idle) {
     state = state_menu;
   }
+  
+  if(state == state_menu){
+    
+    if(showHaeldopButton){
+      
+      // annuller button pressed?
+      if(mouseX > 1126 && mouseX < 1126 + 265 && mouseY > 756 && mouseY < 756 + 88){
+        showHaeldopButton = false;
+        drinkNameSelected = drinkNameMaybeSelected;
+      }
+    } else {
+      // vaelg button pressed?
+      if(mouseX > 1126 && mouseX < 1126 + 265 && mouseY > 653 && mouseY < 653 + 88){
+        showHaeldopButton = true;
+        drinkNameSelected = drinkNameMaybeSelected;
+      }
+    }
+    
+  }
 }
 
 
 
 void mouseDragged() {
-  if (isMouseOverSlider()) {
+  if (isMouseOverSlider() && !showHaeldopButton) {
     if (xendpoint <= 1171) { // has slider reached endpoint right?
       x = x + 1;
     } else if (xstartpoint >= sliderboxX + 345) { // has slider reached endpoint left?
@@ -148,9 +186,9 @@ private void switcher(int i){
     case 0: {
       if((x - 146) - (midRectX) > -190 && (x - 146) - (midRectX) < -150) {
        drinkNameMaybeSelected = "Maybe: Pina Colada";
-       showHaeldopButton = true;
+       //showHaeldopButton = true;
        println(drinkNameMaybeSelected);
-      } else showHaeldopButton = false;
+      }
 
       break;
     }
@@ -159,9 +197,9 @@ private void switcher(int i){
     case 1: {
       if(x + 146 * 0 - midRectX > -190 && x + 146 * 0 - midRectX < -150) {
        drinkNameMaybeSelected = "Maybe: Gin and tonic";
-       showHaeldopButton = true;
+       //showHaeldopButton = true;
        println(drinkNameMaybeSelected);
-      } else showHaeldopButton = false;
+      }
       break;
     }
     
@@ -169,9 +207,9 @@ private void switcher(int i){
     case 2: {
       if((x + 146 * 1) - (midRectX) > -190 && (x + 146 * 1) - (midRectX) < -150) {
        drinkNameMaybeSelected = "Maybe: Long Island Iced Tea";
-       showHaeldopButton = true;
+       //showHaeldopButton = true;
        println(drinkNameMaybeSelected);
-      } else showHaeldopButton = false;
+      }
       break;
     }
     
@@ -179,9 +217,9 @@ private void switcher(int i){
     case 3: {
       if((x + 146 * 2) - (midRectX) > -190 && (x + 146 * 2) - (midRectX) < -150) {
        drinkNameMaybeSelected = "Maybe: Mojito";
-       showHaeldopButton = true;
+       //showHaeldopButton = true;
        println(drinkNameMaybeSelected);
-      } else showHaeldopButton = false;
+      }
       break;
     }
     
@@ -189,9 +227,9 @@ private void switcher(int i){
     case 4: {
       if((x + 146 * 3) - (midRectX) > -190 && (x + 146 * 3) - (midRectX) < -150) {
        drinkNameMaybeSelected = "Maybe: Rom og cola";
-       showHaeldopButton = true;
+       //showHaeldopButton = true;
        println(drinkNameMaybeSelected);
-      } else showHaeldopButton = false;
+      }
       break;
     }
     
@@ -199,9 +237,9 @@ private void switcher(int i){
     case 5: {
       if((x + 146 * 4) - (midRectX) > -190 && (x + 146 * 4) - (midRectX) < -150) {
        drinkNameMaybeSelected = "Maybe: Sex on the beach";
-       showHaeldopButton = true;
+       //showHaeldopButton = true;
        println(drinkNameMaybeSelected);
-      } else showHaeldopButton = false;
+      }
       break;
     }
     
