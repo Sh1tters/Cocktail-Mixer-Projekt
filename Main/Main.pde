@@ -12,6 +12,7 @@ public String drinkNameSelected = "N/A";
 public boolean showHaeldopButton = false;
 
 PImage idleImg;
+PImage starIcon;
 PImage[] images;
 PGraphics collection;
 
@@ -21,6 +22,8 @@ float xendpoint;
 float xstartpoint;
 float imageWidth = 157;
 float imageHeight = 167;
+int resizeImageWidth = 166;
+int resizeImageHeight = 167;
 
 float sliderboxX = 1039;
 float sliderboxY = 373;
@@ -37,38 +40,31 @@ void setup() {
   frameRate(60);
   x = 1039;
   y = 373;
+  
+  starIcon = loadImage("stjerne.png");
+  starIcon.resize(40, 40);
 
    // load background image on idle
   idleImg = loadImage("idleImage.png"); 
   loadImages();
   popularity.loadData();
  
-  collection = createGraphics(6 * 167, 157);
+  collection = createGraphics(6 * resizeImageWidth, resizeImageHeight);
   for (int i = 0; i < images.length; i++) {
     collection.beginDraw();
       collection.image(images[i], 167 * i, 0);
     // get the greatest drinks ID
     if(finalGreatestID.get(0) == i){ // is drink popular?
-     println("1st"); 
-     collection.textAlign(CENTER);
-     collection.textSize(23);
-     collection.fill(#7B7C68);
-     collection.text("Populær", 187 * i, 20);
+    collection.imageMode(CORNER);
+    collection.image(starIcon, 167 * i, 8);
     } else if(finalGreatestID.get(1) == i){ // is drink popular?
-     println("2nd"); 
-     collection.textAlign(CENTER);
-     collection.textSize(23);
-     collection.fill(#7B7C68);
-     collection.text("Populær", 187 * i, 20);
+    collection.imageMode(CORNER);
+    collection.image(starIcon, 167 * i, 8);
     } else if(finalGreatestID.get(2) == i){ // is drink popular?
-     println("3rd");
-     collection.textAlign(CENTER);
-     collection.textSize(23);
-     collection.fill(#7B7C68);
-     collection.text("Populær", 187 * i, 20);
+    collection.imageMode(CORNER);
+    collection.image(starIcon, 167 * i, 8);
     } else {
       collection.endDraw();
-      
     } 
     
 
@@ -86,19 +82,24 @@ void draw() {
     strokeWeight(4); // default weight
     rect(sliderboxX, sliderboxY, sliderboxWidth, sliderboxHeight);
 
-    /*
+    
     if (mousePressed && isMouseOverSlider()) {
       tint(135);
     } else {
       tint(255);
     }
-    */
+    
     
     strokeWeight(8); // thicker
     rect(1206, y, sliderboxWidth / 3, sliderboxHeight);
     
     // display slider images
    image(collection, x,y);   
+   
+   textSize(30);
+   fill(#EA1515);
+   text(drinkNameMaybeSelected, 100, 100);
+   fill(#FFFFFF);
    
     for (int i = 0; i < images.length; i++) {
       switcher(i);
@@ -224,7 +225,7 @@ PImage[] loadImages() {
         images = new PImage[6];
         for(int i = 0; i < images.length; i++){
             images[i] = loadImage(i + ".PNG");
-            images[i].resize(167, 157);
+            images[i].resize(resizeImageWidth, resizeImageHeight);
         }
         return images;
     
