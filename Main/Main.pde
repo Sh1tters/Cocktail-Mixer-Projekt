@@ -7,15 +7,19 @@ private int state_menu = 2;
 // have to change state from different class
 public int state = state_idle;
 
-public String drinkNameMaybeSelected = "N/A";
+public String drinkNameMaybeSelected = "Gin og tonic";
 public String drinkNameSelected = "N/A";
 public boolean showHaeldopButton = false;
 
-PImage idleImg, starIcon, menuImg, vaelgdrikImg, haeldopImg, annullerImg, lineUnderDrinks, DrinksText, IndholdText, lineUnderIndhold;
+public boolean showVerification = false;
+PImage idleImg, starIcon, menuImg, vaelgdrikImg, haeldopImg, annullerImg, lineUnderDrinks, DrinksText, IndholdText, lineUnderIndhold, PinaColadaImg, GinOgTonicImg, 
+LongIslandImg, MojitoImg, RomOgColaImg, SexOnTheBeachImg, VeriYesText, VeriNoText, VeriBackground, VeriYesRect, VeriNoRect, VeriAreUSure, RomOgColaIndhold;
+
 PImage[] images;
 PGraphics collection;
 
 Popularity popularity = new Popularity();
+MakeCocktail makecocktail = new MakeCocktail();
 float x, y;
 float xendpoint;
 float xstartpoint;
@@ -31,6 +35,9 @@ float sliderboxY = 373; //373
 float sliderboxWidth = 843; // 471
 float sliderboxHeight = 225; // 167
 
+String drink_indhold = "";
+boolean makeCocktail = false;
+
 void settings() {
   // display monitor 1 on hardware setup
   fullScreen(P3D);
@@ -41,24 +48,8 @@ void setup() {
   frameRate(60);
   x = 1039;
   y = 373;
-  IndholdText = loadImage("Indhold.png");
-  lineUnderIndhold = loadImage("Line 10.png");
-  lineUnderDrinks = loadImage("Line 1.png");
-  DrinksText = loadImage("Drinks.png");
-  vaelgdrikImg = loadImage("Group 3.png");
-  haeldopImg = loadImage("Group 4.png");
-  annullerImg = loadImage("Group 5.png");
-  starIcon = loadImage("stjerne.png");
-  starIcon.resize(40, 40);
-  
-  IndholdText.resize(200, 100);
-  lineUnderIndhold.resize(400, 0);
-  
-  menuImg = loadImage("menuImg.png");
-  menuImg.resize(2050, 1160);
-   // load background image on idle
-  idleImg = loadImage("idleImage.png"); 
-  loadImages();
+  loadPImages();
+  loadImagesForSlider();
   popularity.loadData();
  
   collection = createGraphics(6 * resizeImageWidth, resizeImageHeight);
@@ -113,10 +104,7 @@ void draw() {
    image(lineUnderDrinks, 812, 342);
    image(IndholdText, 297, 429);
    image(lineUnderIndhold, 296, 559);
-   textSize(30);
-   fill(#EA1515);
-   text(drinkNameMaybeSelected, 100, 100);
-   fill(#FFFFFF);
+
    
     for (int i = 0; i < images.length; i++) {
       switcher(i);
@@ -125,13 +113,31 @@ void draw() {
       xstartpoint = x;
     }
     
-    if(showHaeldopButton){
+    if(makeCocktail){
+      background(255);
+    }
+        
+    if(showHaeldopButton && !makeCocktail){
+        if(showVerification){
+          //VeriYesText, VeriNoText, VeriBaBackground, VeriYesRect, VeriNoRect, VeriAreUSure
+          image(VeriBackground, 701, 370);
+          image(VeriYesRect, 788, 697);
+          image(VeriYesText, 917, 710);
+          image(VeriNoRect, 1222, 697);
+          image(VeriNoText, 1318, 710);
+          image(VeriAreUSure, 788, 427);
+          
+          //popularity.addCount(drinkNameSelected);
+          //makecocktail.main();
+        } else {
+         showTextDrinkAfterPicked(drinkNameSelected);
       image(haeldopImg, 1126, 653);
-      image(annullerImg, 1126,756);
-    } else {
+      image(annullerImg, 1126,756); 
+        }
+    } else  if(!makeCocktail){
+      showTextDrinkBeforePicked(drinkNameMaybeSelected);
       image(vaelgdrikImg, 1126, 653);
     }
-   
   }
   
 }
@@ -144,12 +150,31 @@ void mouseClicked() {
   if(state == state_menu){
     
     if(showHaeldopButton){
+      if(showVerification){
+      if(mouseX > 788 && mouseX < 788 + 385 && mouseY > 697 && mouseY < 697 + 140){ //yes?
+         popularity.AddOnCount(drinkNameSelected);
+         makeCocktail = true;
+         makecocktail.main();
+         
+      } else if(mouseX > 1222 && mouseX < 1222 + 385 && mouseY > 697 && mouseY < 697 + 140){ //no=
+         showVerification = false;
+         showHaeldopButton = false;
+       } else {
+         showVerification = false;
+         showHaeldopButton = true;
+       }
+    } else {
+      if(mouseX > 1126 && mouseX < 1126 + 265 && mouseY > 653 && mouseY < 653 + 88){
+        showVerification = true;
+      }
       
       // annuller button pressed?
       if(mouseX > 1126 && mouseX < 1126 + 265 && mouseY > 756 && mouseY < 756 + 88){
         showHaeldopButton = false;
         drinkNameSelected = drinkNameMaybeSelected;
-      }
+      } 
+    }
+     
     } else {
       // vaelg button pressed?
       if(mouseX > 1126 && mouseX < 1126 + 265 && mouseY > 653 && mouseY < 653 + 88){
@@ -185,9 +210,7 @@ private void switcher(int i){
     // Pina Colada
     case 0: {
       if((x - 146) - (midRectX) > -190 && (x - 146) - (midRectX) < -150) {
-       drinkNameMaybeSelected = "Maybe: Pina Colada";
-       //showHaeldopButton = true;
-       println(drinkNameMaybeSelected);
+       drinkNameMaybeSelected = "Pina Colada";
       }
 
       break;
@@ -196,9 +219,7 @@ private void switcher(int i){
     // Gin og tonic
     case 1: {
       if(x + 146 * 0 - midRectX > -190 && x + 146 * 0 - midRectX < -150) {
-       drinkNameMaybeSelected = "Maybe: Gin and tonic";
-       //showHaeldopButton = true;
-       println(drinkNameMaybeSelected);
+       drinkNameMaybeSelected = "Gin og tonic";
       }
       break;
     }
@@ -206,9 +227,7 @@ private void switcher(int i){
     // Long Island Iced Tea
     case 2: {
       if((x + 146 * 1) - (midRectX) > -190 && (x + 146 * 1) - (midRectX) < -150) {
-       drinkNameMaybeSelected = "Maybe: Long Island Iced Tea";
-       //showHaeldopButton = true;
-       println(drinkNameMaybeSelected);
+       drinkNameMaybeSelected = "Long Island Iced Tea";
       }
       break;
     }
@@ -216,9 +235,7 @@ private void switcher(int i){
     // Mojito
     case 3: {
       if((x + 146 * 2) - (midRectX) > -190 && (x + 146 * 2) - (midRectX) < -150) {
-       drinkNameMaybeSelected = "Maybe: Mojito";
-       //showHaeldopButton = true;
-       println(drinkNameMaybeSelected);
+       drinkNameMaybeSelected = "Mojito";
       }
       break;
     }
@@ -226,9 +243,7 @@ private void switcher(int i){
     // Rom og cola
     case 4: {
       if((x + 146 * 3) - (midRectX) > -190 && (x + 146 * 3) - (midRectX) < -150) {
-       drinkNameMaybeSelected = "Maybe: Rom og cola";
-       //showHaeldopButton = true;
-       println(drinkNameMaybeSelected);
+       drinkNameMaybeSelected = "Rom og cola";
       }
       break;
     }
@@ -236,9 +251,7 @@ private void switcher(int i){
     // Sex on the beach
     case 5: {
       if((x + 146 * 4) - (midRectX) > -190 && (x + 146 * 4) - (midRectX) < -150) {
-       drinkNameMaybeSelected = "Maybe: Sex on the beach";
-       //showHaeldopButton = true;
-       println(drinkNameMaybeSelected);
+       drinkNameMaybeSelected = "Sex on the beach";
       }
       break;
     }
@@ -250,6 +263,111 @@ private void switcher(int i){
   }
 }
 
+
+void showTextDrinkAfterPicked(String drinkNameSelected){
+  switch(drinkNameSelected) {
+    case "Pina Colada": {
+      image(PinaColadaImg, 1135, 593);
+      break;
+    }
+    
+    case "Gin og tonic": {
+      image(GinOgTonicImg, 1135, 593);
+      break;
+    }
+    
+    case "Long Island Iced Tea": {
+      image(LongIslandImg, 1075, 593);
+      break;
+    }
+    
+    case "Mojito": {
+      image(MojitoImg, 1195, 593);
+      break;
+    }
+    
+    case "Rom og cola": {
+      image(RomOgColaImg, 1135, 593);
+      image(RomOgColaIndhold, 296, 584);
+      break;
+    }
+    
+    case "Sex on the beach": {
+      image(SexOnTheBeachImg, 1095, 593);
+      break;
+    }
+  }
+}
+
+void showTextDrinkBeforePicked(String drinkNameMaybeSelected){
+  switch(drinkNameMaybeSelected) {
+    case "Pina Colada": {
+      image(PinaColadaImg, 1135, 593);
+      break;
+    }
+    
+    case "Gin og tonic": {
+      image(GinOgTonicImg, 1135, 593);
+      break;
+    }
+    
+    case "Long Island Iced Tea": {
+      image(LongIslandImg, 1075, 593);
+      break;
+    }
+    
+    case "Mojito": {
+      image(MojitoImg, 1195, 593);
+      break;
+    }
+    
+    case "Rom og cola": {
+      image(RomOgColaImg, 1135, 593);
+      image(RomOgColaIndhold, 296, 584);
+      break;
+    }
+    
+    case "Sex on the beach": {
+      image(SexOnTheBeachImg, 1095, 593);
+      break;
+    }
+  }
+}
+
+void loadPImages(){
+  RomOgColaIndhold = loadImage("RomOgColaIndhold.png");
+  RomOgColaIndhold.resize(400, 137);
+  VeriAreUSure = loadImage("Er du sikker.png");
+  VeriYesText = loadImage("Ja.png");
+  VeriYesRect = loadImage("Rectangle 9.png");
+  VeriNoText = loadImage("Nej.png");
+  VeriNoRect = loadImage("Rectangle 10.png");
+  VeriBackground = loadImage("Rectangle 8.png");
+  SexOnTheBeachImg = loadImage("Sex on the beach.png");
+  RomOgColaImg = loadImage("Rom og cola.png");
+  MojitoImg = loadImage("Mojito.png");
+  LongIslandImg = loadImage("Long Island Iced Tea.png");
+  GinOgTonicImg = loadImage("Gin og tonic.png");
+  PinaColadaImg = loadImage("Pina Colada.png");
+  IndholdText = loadImage("Indhold.png");
+  lineUnderIndhold = loadImage("Line 10.png");
+  lineUnderDrinks = loadImage("Line 1.png");
+  lineUnderDrinks.resize(850, 0);
+  DrinksText = loadImage("Drinks.png");
+  vaelgdrikImg = loadImage("Group 3.png");
+  haeldopImg = loadImage("Group 4.png");
+  annullerImg = loadImage("Group 5.png");
+  starIcon = loadImage("stjerne.png");
+  starIcon.resize(40, 40);
+  
+  IndholdText.resize(200, 100);
+  lineUnderIndhold.resize(400, 0);
+  
+  menuImg = loadImage("menuImg.png");
+  menuImg.resize(2050, 1160);
+
+  idleImg = loadImage("idleImage.png"); 
+}
 
 boolean isMouseOverSlider() {
   return isPointInsideRectangle(mouseX, mouseY, sliderboxX, sliderboxY, sliderboxWidth, sliderboxHeight);
@@ -264,7 +382,17 @@ boolean isPointInsideRectangle(float px, float py, float rx, float ry, float rw,
     ;
 }
 
-PImage[] loadImages() {
+PImage[] loadImagesForSlider() {
+ // load [x] amount of photos for slider
+        images = new PImage[6];
+        for(int i = 0; i < images.length; i++){
+            images[i] = loadImage(i + ".PNG");
+            images[i].resize(resizeImageWidth, resizeImageHeight);
+        }
+        return images;
+    
+}
+PImage[] loadImagesForSlider() {
  // load [x] amount of photos for slider
         images = new PImage[6];
         for(int i = 0; i < images.length; i++){
