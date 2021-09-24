@@ -53,5 +53,9 @@ class Popularity {
       
       return "";
     }
+    
+    void addCount(String drinkNameMaybeSelected){
+      
+    }
   
 }
