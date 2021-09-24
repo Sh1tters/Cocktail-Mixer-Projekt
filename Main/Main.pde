@@ -27,6 +27,8 @@ float sliderboxY = 373;
 float sliderboxWidth = 471;
 float sliderboxHeight = 167;
 
+String drink_text = "";
+
 void settings() {
   // display monitor 1 on hardware setup
   fullScreen(P3D);
@@ -37,7 +39,26 @@ void setup() {
   frameRate(60);
   x = 1039;
   y = 373;
+<<<<<<< Updated upstream
 
+=======
+  IndholdText = loadImage("Indhold.png");
+  lineUnderIndhold = loadImage("Line 10.png");
+  lineUnderDrinks = loadImage("Line 1.png");
+  lineUnderDrinks.resize(850, 0);
+  DrinksText = loadImage("Drinks.png");
+  vaelgdrikImg = loadImage("Group 3.png");
+  haeldopImg = loadImage("Group 4.png");
+  annullerImg = loadImage("Group 5.png");
+  starIcon = loadImage("stjerne.png");
+  starIcon.resize(40, 40);
+  
+  IndholdText.resize(200, 100);
+  lineUnderIndhold.resize(400, 0);
+  
+  menuImg = loadImage("menuImg.png");
+  menuImg.resize(2050, 1160);
+>>>>>>> Stashed changes
    // load background image on idle
   idleImg = loadImage("idleImage.png"); 
   loadImages();
@@ -100,6 +121,19 @@ void draw() {
     // display slider images
    image(collection, x,y);   
    
+<<<<<<< Updated upstream
+=======
+   image(menuImg, -60, -45);
+   image(DrinksText, 812, 212);
+   image(lineUnderDrinks, 812, 342);
+   image(IndholdText, 297, 429);
+   image(lineUnderIndhold, 296, 529);
+   textSize(30);
+   fill(#EA1515);
+   text(drinkNameMaybeSelected, 100, 100);
+   fill(#FFFFFF);
+   
+>>>>>>> Stashed changes
     for (int i = 0; i < images.length; i++) {
       switcher(i);
       //println(imgholder);
@@ -114,6 +148,29 @@ void mouseClicked() {
   if (state == state_idle) {
     state = state_menu;
   }
+<<<<<<< Updated upstream
+=======
+  
+  if(state == state_menu){
+    
+    if(showHaeldopButton){ // user has picked a drink
+      
+      
+      // annuller button pressed?
+      if(mouseX > 1126 && mouseX < 1126 + 265 && mouseY > 756 && mouseY < 756 + 88){
+        showHaeldopButton = false;
+        drinkNameSelected = drinkNameMaybeSelected;
+      } 
+    } else { // user has not picked a drink
+      // vaelg button pressed?
+      if(mouseX > 1126 && mouseX < 1126 + 265 && mouseY > 653 && mouseY < 653 + 88){
+        showHaeldopButton = true;
+        drinkNameSelected = drinkNameMaybeSelected;
+      }
+    }
+    
+  }
+>>>>>>> Stashed changes
 }
 
 
