@@ -13,6 +13,7 @@ public boolean showHaeldopButton = false;
 
 PImage idleImg;
 PImage starIcon;
+PImage menuImg;
 PImage[] images;
 PGraphics collection;
 
@@ -20,15 +21,17 @@ Popularity popularity = new Popularity();
 float x, y;
 float xendpoint;
 float xstartpoint;
-float imageWidth = 157;
-float imageHeight = 167;
-int resizeImageWidth = 166;
-int resizeImageHeight = 167;
+float imageWidth = 166; //157
+float imageHeight = 225; //167
+int resizeImageWidth = 166; //166
+int resizeImageHeight = 225; //167
 
-float sliderboxX = 1039;
-float sliderboxY = 373;
-float sliderboxWidth = 471;
-float sliderboxHeight = 167;
+float midRectX = 1146; //1206
+float midRectY = y;
+float sliderboxX = 823; //1039
+float sliderboxY = 373; //373
+float sliderboxWidth = 843; // 471
+float sliderboxHeight = 225; // 167
 
 void settings() {
   // display monitor 1 on hardware setup
@@ -43,7 +46,9 @@ void setup() {
   
   starIcon = loadImage("stjerne.png");
   starIcon.resize(40, 40);
-
+  
+  menuImg = loadImage("menuImg.png");
+  menuImg.resize(2050, 1160);
    // load background image on idle
   idleImg = loadImage("idleImage.png"); 
   loadImages();
@@ -82,20 +87,21 @@ void draw() {
     strokeWeight(4); // default weight
     rect(sliderboxX, sliderboxY, sliderboxWidth, sliderboxHeight);
 
-    
+    /*
     if (mousePressed && isMouseOverSlider()) {
       tint(135);
     } else {
       tint(255);
     }
-    
+    */
     
     strokeWeight(8); // thicker
-    rect(1206, y, sliderboxWidth / 3, sliderboxHeight);
+    rect(midRectX, y, sliderboxWidth / 4, sliderboxHeight);
     
     // display slider images
    image(collection, x,y);   
    
+   image(menuImg, -60, -45);
    textSize(30);
    fill(#EA1515);
    text(drinkNameMaybeSelected, 100, 100);
@@ -121,9 +127,9 @@ void mouseClicked() {
 
 void mouseDragged() {
   if (isMouseOverSlider()) {
-    if (xendpoint <= 1181) { // has slider reached endpoint right?
+    if (xendpoint <= 1171) { // has slider reached endpoint right?
       x = x + 1;
-    } else if (xstartpoint >= sliderboxX + 200) { // has slider reached endpoint left?
+    } else if (xstartpoint >= sliderboxX + 345) { // has slider reached endpoint left?
       x = x - 1;
     } else {
       x += mouseX - pmouseX; // pmouseX = previous mouse position from last frame
@@ -140,7 +146,7 @@ private void switcher(int i){
     
     // Pina Colada
     case 0: {
-      if((x - 167) - (1206) > -190 && (x - 167) - (1206) < -150) {
+      if((x - 146) - (midRectX) > -190 && (x - 146) - (midRectX) < -150) {
        drinkNameMaybeSelected = "Maybe: Pina Colada";
        showHaeldopButton = true;
        println(drinkNameMaybeSelected);
@@ -151,7 +157,7 @@ private void switcher(int i){
     
     // Gin og tonic
     case 1: {
-      if(x + 167 * 0 - 1206 > -190 && x + 167 * 0 - 1206 < -150) {
+      if(x + 146 * 0 - midRectX > -190 && x + 146 * 0 - midRectX < -150) {
        drinkNameMaybeSelected = "Maybe: Gin and tonic";
        showHaeldopButton = true;
        println(drinkNameMaybeSelected);
@@ -161,7 +167,7 @@ private void switcher(int i){
     
     // Long Island Iced Tea
     case 2: {
-      if((x + 167 * 1) - (1206) > -190 && (x + 167 * 1) - (1206) < -150) {
+      if((x + 146 * 1) - (midRectX) > -190 && (x + 146 * 1) - (midRectX) < -150) {
        drinkNameMaybeSelected = "Maybe: Long Island Iced Tea";
        showHaeldopButton = true;
        println(drinkNameMaybeSelected);
@@ -171,7 +177,7 @@ private void switcher(int i){
     
     // Mojito
     case 3: {
-      if((x + 167 * 2) - (1206) > -190 && (x + 167 * 2) - (1206) < -150) {
+      if((x + 146 * 2) - (midRectX) > -190 && (x + 146 * 2) - (midRectX) < -150) {
        drinkNameMaybeSelected = "Maybe: Mojito";
        showHaeldopButton = true;
        println(drinkNameMaybeSelected);
@@ -181,7 +187,7 @@ private void switcher(int i){
     
     // Rom og cola
     case 4: {
-      if((x + 167 * 3) - (1206) > -190 && (x + 167 * 3) - (1206) < -150) {
+      if((x + 146 * 3) - (midRectX) > -190 && (x + 146 * 3) - (midRectX) < -150) {
        drinkNameMaybeSelected = "Maybe: Rom og cola";
        showHaeldopButton = true;
        println(drinkNameMaybeSelected);
@@ -191,7 +197,7 @@ private void switcher(int i){
     
     // Sex on the beach
     case 5: {
-      if((x + 167 * 4) - (1206) > -190 && (x + 167 * 4) - (1206) < -150) {
+      if((x + 146 * 4) - (midRectX) > -190 && (x + 146 * 4) - (midRectX) < -150) {
        drinkNameMaybeSelected = "Maybe: Sex on the beach";
        showHaeldopButton = true;
        println(drinkNameMaybeSelected);
