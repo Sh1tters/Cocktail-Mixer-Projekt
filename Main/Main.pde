@@ -7,17 +7,19 @@ private int state_menu = 2;
 // have to change state from different class
 public int state = state_idle;
 
-public String drinkNameMaybeSelected = "N/A";
+public String drinkNameMaybeSelected = "Gin og tonic";
 public String drinkNameSelected = "N/A";
 public boolean showHaeldopButton = false;
-public boolean showVerification = false;
 
-PImage idleImg, starIcon, menuImg, vaelgdrikImg, haeldopImg, annullerImg, lineUnderDrinks, DrinksText, IndholdText, lineUnderIndhold, PinaColadaImg, GinOgTonicImg, LongIslandImg, MojitoImg, RomOgColaImg, SexOnTheBeachImg, VeriYesText, VeriNoText, VeriBackground, VeriYesRect, VeriNoRect, VeriAreUSure;
+public boolean showVerification = false;
+PImage idleImg, starIcon, menuImg, vaelgdrikImg, haeldopImg, annullerImg, lineUnderDrinks, DrinksText, IndholdText, lineUnderIndhold, PinaColadaImg, GinOgTonicImg, 
+LongIslandImg, MojitoImg, RomOgColaImg, SexOnTheBeachImg, VeriYesText, VeriNoText, VeriBackground, VeriYesRect, VeriNoRect, VeriAreUSure, RomOgColaIndhold;
+
 PImage[] images;
 PGraphics collection;
 
-MakeCocktail makecocktail = new MakeCocktail();
 Popularity popularity = new Popularity();
+MakeCocktail makecocktail = new MakeCocktail();
 float x, y;
 float xendpoint;
 float xstartpoint;
@@ -33,8 +35,8 @@ float sliderboxY = 373; //373
 float sliderboxWidth = 843; // 471
 float sliderboxHeight = 225; // 167
 
-String drink_text = "";
-
+String drink_indhold = "";
+boolean makeCocktail = false;
 
 void settings() {
   // display monitor 1 on hardware setup
@@ -46,12 +48,11 @@ void setup() {
   frameRate(60);
   x = 1039;
   y = 373;
-
   loadPImages();
   loadImagesForSlider();
   popularity.loadData();
  
-  collection = createGraphics(6 * 167, 157);
+  collection = createGraphics(6 * resizeImageWidth, resizeImageHeight);
   for (int i = 0; i < images.length; i++) {
     collection.beginDraw();
       collection.image(images[i], 167 * i, 0);
@@ -93,7 +94,7 @@ void draw() {
     */
     
     strokeWeight(8); // thicker
-    rect(1206, y, sliderboxWidth / 3, sliderboxHeight);
+    rect(midRectX, y, sliderboxWidth / 4, sliderboxHeight);
     
     // display slider images
    image(collection, x,y);   
@@ -102,11 +103,9 @@ void draw() {
    image(DrinksText, 812, 212);
    image(lineUnderDrinks, 812, 342);
    image(IndholdText, 297, 429);
-   image(lineUnderIndhold, 296, 529);
+   image(lineUnderIndhold, 296, 559);
+
    
-
-
-
     for (int i = 0; i < images.length; i++) {
       switcher(i);
       //println(imgholder);
@@ -114,29 +113,33 @@ void draw() {
       xstartpoint = x;
     }
     
-    if(showHaeldopButton){
+    if(makeCocktail){
+      background(255);
+    }
+        
+    if(showHaeldopButton && !makeCocktail){
         if(showVerification){
           //VeriYesText, VeriNoText, VeriBaBackground, VeriYesRect, VeriNoRect, VeriAreUSure
-          image(VeriBackground, 0, 0);
-          image(VeriYesRect, 0, 0);
-          image(VeriYesText, 0, 0);
-          image(VeriNoRect, 0, 0);
-          image(VeriNoText, 0, 0);
-          image(VeriAreUSure, 0, 0);
+          image(VeriBackground, 701, 370);
+          image(VeriYesRect, 788, 697);
+          image(VeriYesText, 917, 710);
+          image(VeriNoRect, 1222, 697);
+          image(VeriNoText, 1318, 710);
+          image(VeriAreUSure, 788, 427);
           
           //popularity.addCount(drinkNameSelected);
-          makecocktail.main();
+          //makecocktail.main();
         } else {
          showTextDrinkAfterPicked(drinkNameSelected);
       image(haeldopImg, 1126, 653);
       image(annullerImg, 1126,756); 
         }
-    } else {
+    } else  if(!makeCocktail){
       showTextDrinkBeforePicked(drinkNameMaybeSelected);
       image(vaelgdrikImg, 1126, 653);
     }
-   
   }
+  
 }
 
 void mouseClicked() {
@@ -146,24 +149,33 @@ void mouseClicked() {
   
   if(state == state_menu){
     
-    if(showHaeldopButton){ // user has picked a drink
+    if(showHaeldopButton){
       if(showVerification){
-          
-      } else {
-      // haeldop button pressed?
-      if(mouseX > 1126 && mouseX < 1126 + 256 && mouseY > 653 && mouseY < 653 + 88){
-        
-        // show verification buttons  
+      if(mouseX > 788 && mouseX < 788 + 385 && mouseY > 697 && mouseY < 697 + 140){ //yes?
+         popularity.AddOnCount(drinkNameSelected);
+         makeCocktail = true;
+         makecocktail.main();
+         
+      } else if(mouseX > 1222 && mouseX < 1222 + 385 && mouseY > 697 && mouseY < 697 + 140){ //no=
+         showVerification = false;
+         showHaeldopButton = false;
+       } else {
+         showVerification = false;
+         showHaeldopButton = true;
+       }
+    } else {
+      if(mouseX > 1126 && mouseX < 1126 + 265 && mouseY > 653 && mouseY < 653 + 88){
         showVerification = true;
       }
       
-      }
       // annuller button pressed?
       if(mouseX > 1126 && mouseX < 1126 + 265 && mouseY > 756 && mouseY < 756 + 88){
         showHaeldopButton = false;
         drinkNameSelected = drinkNameMaybeSelected;
       } 
-    } else { // user has not picked a drink
+    }
+     
+    } else {
       // vaelg button pressed?
       if(mouseX > 1126 && mouseX < 1126 + 265 && mouseY > 653 && mouseY < 653 + 88){
         showHaeldopButton = true;
@@ -177,10 +189,10 @@ void mouseClicked() {
 
 
 void mouseDragged() {
-  if (isMouseOverSlider()) {
-    if (xendpoint <= 1181) { // has slider reached endpoint right?
+  if (isMouseOverSlider() && !showHaeldopButton) {
+    if (xendpoint <= 1171) { // has slider reached endpoint right?
       x = x + 1;
-    } else if (xstartpoint >= sliderboxX + 200) { // has slider reached endpoint left?
+    } else if (xstartpoint >= sliderboxX + 345) { // has slider reached endpoint left?
       x = x - 1;
     } else {
       x += mouseX - pmouseX; // pmouseX = previous mouse position from last frame
@@ -207,7 +219,7 @@ private void switcher(int i){
     // Gin og tonic
     case 1: {
       if(x + 146 * 0 - midRectX > -190 && x + 146 * 0 - midRectX < -150) {
-       drinkNameMaybeSelected = "Gin and tonic";
+       drinkNameMaybeSelected = "Gin og tonic";
       }
       break;
     }
@@ -251,6 +263,7 @@ private void switcher(int i){
   }
 }
 
+
 void showTextDrinkAfterPicked(String drinkNameSelected){
   switch(drinkNameSelected) {
     case "Pina Colada": {
@@ -258,7 +271,7 @@ void showTextDrinkAfterPicked(String drinkNameSelected){
       break;
     }
     
-    case "Gin and tonic": {
+    case "Gin og tonic": {
       image(GinOgTonicImg, 1135, 593);
       break;
     }
@@ -275,6 +288,7 @@ void showTextDrinkAfterPicked(String drinkNameSelected){
     
     case "Rom og cola": {
       image(RomOgColaImg, 1135, 593);
+      image(RomOgColaIndhold, 296, 584);
       break;
     }
     
@@ -292,7 +306,7 @@ void showTextDrinkBeforePicked(String drinkNameMaybeSelected){
       break;
     }
     
-    case "Gin and tonic": {
+    case "Gin og tonic": {
       image(GinOgTonicImg, 1135, 593);
       break;
     }
@@ -309,6 +323,7 @@ void showTextDrinkBeforePicked(String drinkNameMaybeSelected){
     
     case "Rom og cola": {
       image(RomOgColaImg, 1135, 593);
+      image(RomOgColaIndhold, 296, 584);
       break;
     }
     
@@ -320,6 +335,8 @@ void showTextDrinkBeforePicked(String drinkNameMaybeSelected){
 }
 
 void loadPImages(){
+  RomOgColaIndhold = loadImage("RomOgColaIndhold.png");
+  RomOgColaIndhold.resize(400, 137);
   VeriAreUSure = loadImage("Er du sikker.png");
   VeriYesText = loadImage("Ja.png");
   VeriYesRect = loadImage("Rectangle 9.png");
@@ -352,7 +369,6 @@ void loadPImages(){
   idleImg = loadImage("idleImage.png"); 
 }
 
-
 boolean isMouseOverSlider() {
   return isPointInsideRectangle(mouseX, mouseY, sliderboxX, sliderboxY, sliderboxWidth, sliderboxHeight);
 }
@@ -371,7 +387,7 @@ PImage[] loadImagesForSlider() {
         images = new PImage[6];
         for(int i = 0; i < images.length; i++){
             images[i] = loadImage(i + ".PNG");
-            images[i].resize(167, 157);
+            images[i].resize(resizeImageWidth, resizeImageHeight);
         }
         return images;
     
