@@ -5,9 +5,9 @@ import java.util.stream.Collectors;
 IntDict greatestCollection = new IntDict();
 IntDict idCollection = new IntDict();
 JSONObject json;
-ArrayList<Integer> counter = new ArrayList<>();
-ArrayList<String> greatest = new ArrayList<>();
-ArrayList<Integer> finalGreatestID = new ArrayList<>();
+ArrayList<Integer> counter = new ArrayList();
+ArrayList<String> greatest = new ArrayList();
+ArrayList<Integer> finalGreatestID = new ArrayList();
 int id;
 
 class Popularity {

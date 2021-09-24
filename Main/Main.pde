@@ -392,3 +392,13 @@ PImage[] loadImagesForSlider() {
         return images;
     
 }
+PImage[] loadImagesForSlider() {
+ // load [x] amount of photos for slider
+        images = new PImage[6];
+        for(int i = 0; i < images.length; i++){
+            images[i] = loadImage(i + ".PNG");
+            images[i].resize(resizeImageWidth, resizeImageHeight);
+        }
+        return images;
+    
+}
