@@ -35,7 +35,6 @@ float sliderboxY = 373; //373
 float sliderboxWidth = 843; // 471
 float sliderboxHeight = 225; // 167
 
-String drink_indhold = "";
 boolean makeCocktail = false;
 
 void settings() {
@@ -392,4 +391,3 @@ PImage[] loadImagesForSlider() {
         return images;
     
 }
-
