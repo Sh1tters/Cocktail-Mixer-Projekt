@@ -41,6 +41,15 @@ class Popularity {
     
     
     
+    /*
+    Vi laver en funktion for at få den højeste værdi ud af et array list
+    Vi kalder funktionen for getHighest, og dermed bruger vores java utilites som er implementeret
+    Vores arraylist hedder counter, og vi bruger dermed Collections.sort(counter) til at sortere det fra mindst --> størst, og derefter
+    bruger vi Collections.reverse(counter) så vi har størst --> mindst
+    Til sidst bruger vi en for loop og tager de 3 første værdier i vores arrayList, nemlig de 3 største værdier
+    og dermed adder den værdi i vores greatest arraylisst
+    
+    */
     
     String getHighest(){
       // sorting list from greatest to least

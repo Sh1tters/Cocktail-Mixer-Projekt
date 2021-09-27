@@ -1,10 +1,6 @@
-// we dont want these integers to be changed
-// so were making them private
 private int state_idle = 1;
 private int state_menu = 2;
 
-// we want this to be changed if we maybe
-// have to change state from different class
 public int state = state_idle;
 
 public String drinkNameMaybeSelected = "Gin og tonic";
@@ -23,12 +19,12 @@ MakeCocktail makecocktail = new MakeCocktail();
 float x, y;
 float xendpoint;
 float xstartpoint;
-float imageWidth = 166; //157
-float imageHeight = 225; //167
-int resizeImageWidth = 166; //166
-int resizeImageHeight = 225; //167
+float imageWidth = 166; 
+float imageHeight = 225; 
+int resizeImageWidth = 166; 
+int resizeImageHeight = 225; 
 
-float midRectX = 1146; //1206
+float midRectX = 1146; 
 float midRectY = y;
 float sliderboxX = 823;
 float sliderboxY = 373;
@@ -365,6 +361,14 @@ boolean isPointInsideRectangle(float px, float py, float rx, float ry, float rw,
     ;
 }
 
+/*
+Opretter en PImage Array med navnet loadImagesForSlider
+I vores array, har vi en allerede oprettet PImages som hedder images og dermed giver den 6 array elements i vores PImage array
+Vi laver nu en for loop og kører igennem vores images.length som er 5
+For hver array element, giver en images en ny slot med en loaded image
+Vi resizer nu images til den bestemte width og height
+og til sidst returner vi images, så vi kan bruge det et andet sted.
+*/
 PImage[] loadImagesForSlider() {
  // load [x] amount of photos for slider
         images = new PImage[6];
