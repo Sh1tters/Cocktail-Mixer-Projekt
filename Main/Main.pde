@@ -30,10 +30,10 @@ int resizeImageHeight = 225; //167
 
 float midRectX = 1146; //1206
 float midRectY = y;
-float sliderboxX = 823; //1039
-float sliderboxY = 373; //373
-float sliderboxWidth = 843; // 471
-float sliderboxHeight = 225; // 167
+float sliderboxX = 823;
+float sliderboxY = 373;
+float sliderboxWidth = 843;
+float sliderboxHeight = 225;
 
 boolean makeCocktail = false;
 
@@ -57,16 +57,16 @@ void setup() {
       collection.image(images[i], 167 * i, 0);
     // get the greatest drinks ID
     if(finalGreatestID.get(0) == i){ // is drink popular?
-    collection.imageMode(CORNER);
-    collection.image(starIcon, 167 * i, 8);
+    collection.imageMode(CORNER); // corner image
+    collection.image(starIcon, 167 * i, 8); // add image on image
     } else if(finalGreatestID.get(1) == i){ // is drink popular?
-    collection.imageMode(CORNER);
-    collection.image(starIcon, 167 * i, 8);
+    collection.imageMode(CORNER); // corner image
+    collection.image(starIcon, 167 * i, 8); // add image on image
     } else if(finalGreatestID.get(2) == i){ // is drink popular?
-    collection.imageMode(CORNER);
-    collection.image(starIcon, 167 * i, 8);
+    collection.imageMode(CORNER); // corner image
+    collection.image(starIcon, 167 * i, 8); // add image on image
     } else {
-      collection.endDraw();
+      collection.endDraw(); // finish draw
     } 
     
 
@@ -82,22 +82,13 @@ void draw() {
     background(255);
     // rectangle around the 3 images
     strokeWeight(4); // default weight
-    rect(sliderboxX, sliderboxY, sliderboxWidth, sliderboxHeight);
-
-    /*
-    if (mousePressed && isMouseOverSlider()) {
-      tint(135);
-    } else {
-      tint(255);
-    }
-    */
+    rect(sliderboxX, sliderboxY, sliderboxWidth, sliderboxHeight); // rect around slider items
     
     strokeWeight(8); // thicker
-    rect(midRectX, y, sliderboxWidth / 4, sliderboxHeight);
+    rect(midRectX, y, sliderboxWidth / 4, sliderboxHeight); // mid part of rect
     
     // display slider images
-   image(collection, x,y);   
-   
+   image(collection, x,y);
    image(menuImg, -60, -45);
    image(DrinksText, 812, 212);
    image(lineUnderDrinks, 812, 342);
@@ -107,7 +98,7 @@ void draw() {
    
     for (int i = 0; i < images.length; i++) {
       switcher(i);
-      //println(imgholder);
+
       xendpoint = x + 167 * i;
       xstartpoint = x;
     }
@@ -118,16 +109,12 @@ void draw() {
         
     if(showHaeldopButton && !makeCocktail){
         if(showVerification){
-          //VeriYesText, VeriNoText, VeriBaBackground, VeriYesRect, VeriNoRect, VeriAreUSure
           image(VeriBackground, 701, 370);
           image(VeriYesRect, 788, 697);
           image(VeriYesText, 917, 710);
           image(VeriNoRect, 1222, 697);
           image(VeriNoText, 1318, 710);
           image(VeriAreUSure, 788, 427);
-          
-          //popularity.addCount(drinkNameSelected);
-          //makecocktail.main();
         } else {
          showTextDrinkAfterPicked(drinkNameSelected);
       image(haeldopImg, 1126, 653);
@@ -150,20 +137,20 @@ void mouseClicked() {
     
     if(showHaeldopButton){
       if(showVerification){
-      if(mouseX > 788 && mouseX < 788 + 385 && mouseY > 697 && mouseY < 697 + 140){ //yes?
+      if(mouseX > 788 && mouseX < 788 + 385 && mouseY > 697 && mouseY < 697 + 140){ // did user press on verification yes?
          popularity.AddOnCount(drinkNameSelected);
          makeCocktail = true;
          makecocktail.main();
          
-      } else if(mouseX > 1222 && mouseX < 1222 + 385 && mouseY > 697 && mouseY < 697 + 140){ //no=
+      } else if(mouseX > 1222 && mouseX < 1222 + 385 && mouseY > 697 && mouseY < 697 + 140){ // did user press on verification no?
          showVerification = false;
          showHaeldopButton = false;
-       } else {
+       } else { // pressed on non of the buttons? then go back
          showVerification = false;
          showHaeldopButton = true;
        }
     } else {
-      if(mouseX > 1126 && mouseX < 1126 + 265 && mouseY > 653 && mouseY < 653 + 88){
+      if(mouseX > 1126 && mouseX < 1126 + 265 && mouseY > 653 && mouseY < 653 + 88){ // haeld op button pressed?
         showVerification = true;
       }
       
@@ -358,13 +345,10 @@ void loadPImages(){
   annullerImg = loadImage("Group 5.png");
   starIcon = loadImage("stjerne.png");
   starIcon.resize(40, 40);
-  
   IndholdText.resize(200, 100);
   lineUnderIndhold.resize(400, 0);
-  
   menuImg = loadImage("menuImg.png");
   menuImg.resize(2050, 1160);
-
   idleImg = loadImage("idleImage.png"); 
 }
 
