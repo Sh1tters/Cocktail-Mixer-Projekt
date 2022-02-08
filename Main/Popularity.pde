@@ -48,7 +48,6 @@ class Popularity {
     bruger vi Collections.reverse(counter) så vi har størst --> mindst
     Til sidst bruger vi en for loop og tager de 3 første værdier i vores arrayList, nemlig de 3 største værdier
     og dermed adder den værdi i vores greatest arraylisst
-    
     */
     
     String getHighest(){
