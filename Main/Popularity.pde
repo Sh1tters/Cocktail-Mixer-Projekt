@@ -63,7 +63,24 @@ class Popularity {
     }
     
     void AddOnCount(String drinkNameSelected){
-      
+      json = loadJSONObject("Storage/data.json");
+        JSONArray values = json.getJSONArray("drinks");
+        for(int i = 0; i < values.size(); i++){
+       
+           JSONObject drinks = values.getJSONObject(i);
+           
+           id = drinks.getInt("id");
+           String name = drinks.getString("name");
+           println(name, drinkNameSelected);
+           if(drinkNameSelected.endsWith(name)){
+             int count = drinks.getInt("count");
+             println(count);
+             drinks.setInt("count", count++);
+             count = drinks.getInt("count");
+             println(count);
+           }
+           
+        }
     }
   
 }

@@ -1,3 +1,10 @@
+// SOCKETS
+import processing.net.*;
+
+Client client;
+
+
+
 private int state_idle = 1;
 private int state_menu = 2;
 private int state_drink = 3;
@@ -17,6 +24,7 @@ PGraphics collection;
 
 Popularity popularity = new Popularity();
 MakeCocktail makecocktail = new MakeCocktail();
+Predictor predict = new Predictor();
 float x, y;
 float xendpoint;
 float xstartpoint;
@@ -40,6 +48,8 @@ void settings() {
 }
 
 void setup() {
+  client = new Client(this, "127.0.0.1", 9050); // Connects to python server
+
   // 60 frames per second (default)
   frameRate(60);
   x = 1039;
@@ -116,6 +126,7 @@ void draw() {
 void mouseClicked() {
   if (state == state_idle) {
     state = state_menu;
+    predict.getPredictedDrink();
   }
 
   if (state == state_menu) {

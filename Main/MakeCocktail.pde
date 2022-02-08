@@ -11,7 +11,7 @@ class MakeCocktail {
     } else filled = 400;
 
     if (makeCocktail) {
-       String[] lines = loadStrings(address + type + typevalue + returnDrink(drink));
+    //   String[] lines = loadStrings(address + type + typevalue + returnDrink(drink));
       makeCocktail = false;
     }
 
