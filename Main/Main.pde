@@ -51,7 +51,7 @@ void settings() {
 
 void setup() {
   client = new Client(this, "127.0.0.1", 9050); // Connects to python server
-predict.getPredictedDrink();
+  predict.getPredictedDrink();
   // 60 frames per second (default)
   frameRate(60);
   x = 1039;
@@ -59,7 +59,7 @@ predict.getPredictedDrink();
   loadPImages();
   loadImagesForSlider();
   popularity.loadData();
-  
+
   collection = createGraphics(6 * resizeImageWidth, resizeImageHeight);
   for (int i = 0; i < images.length; i++) {
     println(predicted_drink, i);
@@ -75,8 +75,13 @@ predict.getPredictedDrink();
     } else if (finalGreatestID.get(2) == i && predicted_drink != i) { // is drink popular?
       collection.imageMode(CORNER); // corner image
       collection.image(starIcon, 167 * i, 8); // add image on image
-    } if(predicted_drink == i){
-       collection.imageMode(CORNER); // corner image
+    }
+    if (predicted_drink == i && finalGreatestID.get(0) == i || predicted_drink == i && finalGreatestID.get(1) == i ||predicted_drink == i && finalGreatestID.get(2) == i ) {
+      collection.imageMode(CORNER); // corner image
+      collection.image(starIcon, 167 * i, 8); // add image on image
+      collection.image(recommendIcon, 167 * i, 50); // add image on image
+    } else if (predicted_drink == i) {
+      collection.imageMode(CORNER); // corner image
       collection.image(recommendIcon, 167 * i, 8); // add image on image
     } else {
       collection.endDraw(); // finish draw
@@ -132,7 +137,7 @@ void draw() {
 void mouseClicked() {
   if (state == state_idle) {
     state = state_menu;
-  //  predict.getPredictedDrink();
+    //  predict.getPredictedDrink();
   }
 
   if (state == state_menu) {
